@@ -1,11 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  RouteComponentProps
-} from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 
 const SearchPage: React.FC<RouteComponentProps<{ movie: string }>> = ({
   match
