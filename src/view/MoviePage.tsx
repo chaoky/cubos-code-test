@@ -28,9 +28,7 @@ const MoviePage: React.FC<RouteComponentProps<{ movie: string }>> = props => {
         `https://api.themoviedb.org/3/movie/${props.match.params.movie}?append_to_response=videos&api_key=2f1782b66fc79d34a80c426568681445&language=pt-BR`
       )
       .then(e => {
-        const puta = e.data;
-        console.log(puta);
-        setMovieDetails(puta);
+        setMovieDetails({ ...e.data });
       })
       .finally(() => setLoading(false));
   }, [props.match.params.movie, apiKey]);
