@@ -4,7 +4,7 @@ import { jsx } from "theme-ui";
 const Circle: React.FC<{ text: string; size: number }> = ({ text, size }) => (
   <div
     sx={{
-      border: "5px solid",
+      border: `${size / 20}px solid`,
       borderColor: "secondary",
       borderRadius: "50%",
       height: size,
@@ -21,7 +21,7 @@ const Circle: React.FC<{ text: string; size: number }> = ({ text, size }) => (
         width: `calc(100% - ${size / 5}px)`,
         lineHeight: `${size / 1.3}px`,
         textAlign: "center",
-        fontSize: `${size / 37}em`
+        fontSize: `${size / 44}em`
       }}>
       {text}
     </div>
