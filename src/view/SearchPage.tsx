@@ -43,7 +43,7 @@ const SearchPage: React.FC<
         })
         .finally(() => setLoading(false));
     }
-  }, [query, apiKey, param, page]);
+  }, [query, apiKey, param, page, genreList]);
 
   return loading ? (
     <div></div>

@@ -45,9 +45,7 @@ const App: React.FC = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  return loading ? (
-    <div></div>
-  ) : (
+  return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <Router>
@@ -81,34 +79,42 @@ const App: React.FC = () => {
                 <h1>Movies</h1>
               </Link>
             </header>
-            <div sx={{ display: "flex", justifyContent: "center", paddingTop: "5vh" }}>
-              <SearchBar />
-            </div>
-            <Route
-              exact
-              path="/"
-              component={() => (
+
+            {loading ? (
+              <div></div>
+            ) : (
+              <div>
                 <div
-                  css={{
-                    paddingTop: "5vh",
-                    gap: "20%",
-                    display: "grid",
-                    justifyItems: "center"
-                  }}>
-                  <div css={{ textAlign: "center" }}>
-                    <h4>Filmes em Destaque</h4>
-                    <div>
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum, qui
-                      rerum ut ducimus recusandae voluptas omnis. Animi velit voluptatem
-                      voluptas quibusdam, totam, eos necessitatibus ea quaerat quas minus
-                      explicabo libero.
-                    </div>
-                  </div>
+                  sx={{ display: "flex", justifyContent: "center", paddingTop: "5vh" }}>
+                  <SearchBar />
                 </div>
-              )}
-            />
-            <Route path="/search/:type/:query" component={SearchPage} />
-            <Route exact path="/movie/:movie" component={MoviePage} />
+                <Route
+                  exact
+                  path="/"
+                  component={() => (
+                    <div
+                      css={{
+                        paddingTop: "5vh",
+                        gap: "20%",
+                        display: "grid",
+                        justifyItems: "center"
+                      }}>
+                      <div css={{ textAlign: "center" }}>
+                        <h4>Filmes em Destaque</h4>
+                        <div>
+                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum,
+                          qui rerum ut ducimus recusandae voluptas omnis. Animi velit
+                          voluptatem voluptas quibusdam, totam, eos necessitatibus ea
+                          quaerat quas minus explicabo libero.
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                />
+                <Route path="/search/:type/:query" component={SearchPage} />
+                <Route exact path="/movie/:movie" component={MoviePage} />
+              </div>
+            )}
           </div>
         </Router>
       </Provider>

@@ -46,7 +46,7 @@ const SearchBar: React.FC = () => {
         })
         .finally(() => setLoading(false));
     }
-  }, [query, apiKey, param]);
+  }, [query, apiKey, param, genreList]);
 
   return (
     <div onMouseLeave={() => setFocused(false)}>
