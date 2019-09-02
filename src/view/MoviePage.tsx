@@ -2,6 +2,7 @@
 import { jsx } from "theme-ui";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 import Circle from "./Circle";
 import { RouteComponentProps } from "react-router";
@@ -22,11 +23,11 @@ const MoviePage: React.FC<RouteComponentProps<{ movie: string }>> = props => {
       .replace(/(\d)(?=(\d{3})+(?:,\d+)?$)/g, "$1.");
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${props.match.params.movie}?append_to_response=videos&api_key=${apiKey}&language=pt-BR`
-    )
-      .then(e => e.json())
-      .then(e => setMovieDetails({ ...e }))
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/${props.match.params.movie}?append_to_response=videos&api_key=${apiKey}&language=pt-BR`
+      )
+      .then(e => setMovieDetails({ ...e.data }))
       .finally(() => setLoading(false));
   }, [props.match.params.movie, apiKey]);
 

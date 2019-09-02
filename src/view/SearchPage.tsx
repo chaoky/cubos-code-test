@@ -8,7 +8,6 @@ import Circle from "./Circle";
 import { searchMovie, Result } from "searchMovie";
 import { RouteComponentProps } from "react-router";
 import { state } from "mainStore";
-import { grid, height } from "styled-system";
 
 const SearchPage: React.FC<
   RouteComponentProps<{ query: string; type: string }>
@@ -19,6 +18,7 @@ const SearchPage: React.FC<
   const [page, setPage] = useState(1);
   const param = props.match.params.type;
   const query = props.match.params.query;
+  const genreList = useSelector((e: state) => e.genres);
 
   useEffect(() => {
     if (query.length) {
@@ -29,8 +29,11 @@ const SearchPage: React.FC<
         url: param === "query" ? "/search/movie" : "/discover/movie",
         params: {
           api_key: apiKey,
-          language: "pt_BR",
-          [param]: query,
+          language: "pt-BR",
+          [param]:
+            param === "with_genres"
+              ? genreList.filter(e => e.name === query)[0].id
+              : query,
           page
         }
       })
@@ -149,7 +152,7 @@ const SearchPage: React.FC<
         }}>
         {[1, 2, 3, 4, 5].map(e => (
           <div onClick={() => setPage(e)} sx={{ cursor: "pointer" }}>
-            {e == page ? <Circle text={String(e)} size={40} /> : <p>{e}</p>}
+            {e === page ? <Circle text={String(e)} size={40} /> : <p>{e}</p>}
           </div>
         ))}
       </div>

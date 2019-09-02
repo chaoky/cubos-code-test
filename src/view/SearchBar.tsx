@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui";
 import { useEffect, useState } from "react";
 import { searchMovie, Result } from "searchMovie";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
@@ -11,14 +11,14 @@ import { state } from "mainStore";
 const SearchBar: React.FC = () => {
   const apiKey = useSelector((e: state) => e.movieDbKey);
   const [query, setQuery] = useState("");
-  const [redirect, setRedirect] = useState(false);
   const [movieList, setMovieList] = useState([{}] as Result[]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [focused, setFocused] = useState(false);
-  const genreList = ["Action", "OwO"];
+  const genreList = useSelector((e: state) => e.genres);
 
   const param = (() => {
-    if (genreList.includes(query)) return "with_genres";
+    if (genreList.reduce((a, e) => [...a, e.name], [""]).includes(query))
+      return "with_genres";
     else if (Number(query) >= 1907 && Number(query) <= new Date().getFullYear() + 1)
       return "primary_release_year";
     else return "query";
@@ -33,8 +33,11 @@ const SearchBar: React.FC = () => {
         url: param === "query" ? "/search/movie" : "/discover/movie",
         params: {
           api_key: apiKey,
-          language: "pt_BR",
-          [param]: query
+          language: "pt-BR",
+          [param]:
+            param === "with_genres"
+              ? genreList.filter(e => e.name === query)[0].id
+              : query
         }
       })
         .then(e => {
