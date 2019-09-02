@@ -12,10 +12,7 @@ import MoviePage from "./MoviePage";
 import SearchPage from "./SearchPage";
 
 const store = createStore(
-  (
-    state: state = { movieDbKey: "2f1782b66fc79d34a80c426568681445" },
-    action
-  ) => {
+  (state: state = { movieDbKey: "2f1782b66fc79d34a80c426568681445" }, action) => {
     switch (action.type) {
       default:
         return { ...state };
@@ -45,8 +42,7 @@ const App: React.FC = () => (
               backgroundColor: "secondary",
               display: "flex",
               justifyContent: "center"
-            }}
-          >
+            }}>
             <Link
               to="/"
               sx={{
@@ -54,38 +50,38 @@ const App: React.FC = () => (
                 color: "primary",
                 cursor: "pointer",
                 ":hover": { color: "accent" }
-              }}
-            >
+              }}>
               <h1>Movies</h1>
             </Link>
           </header>
+          <div sx={{ display: "flex", justifyContent: "center", paddingTop: "5vh" }}>
+            <SearchBar />
+          </div>
           <Route
             exact
             path="/"
             component={() => (
               <div
                 css={{
-                  paddingTop: "20%",
+                  paddingTop: "5vh",
                   gap: "20%",
                   display: "grid",
                   justifyItems: "center"
-                }}
-              >
-                <SearchBar />
+                }}>
                 <div css={{ textAlign: "center" }}>
                   <h4>Filmes em Destaque</h4>
                   <div>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Illum, qui rerum ut ducimus recusandae voluptas omnis. Animi
-                    velit voluptatem voluptas quibusdam, totam, eos
-                    necessitatibus ea quaerat quas minus explicabo libero.
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum, qui
+                    rerum ut ducimus recusandae voluptas omnis. Animi velit voluptatem
+                    voluptas quibusdam, totam, eos necessitatibus ea quaerat quas minus
+                    explicabo libero.
                   </div>
                 </div>
               </div>
             )}
           />
-          <Route path="/search/:movie" component={SearchPage} />
-          <Route path="/movie/:movie" component={MoviePage} />
+          <Route path="/search/:type/:query" component={SearchPage} />
+          <Route exact path="/movie/:movie" component={MoviePage} />
         </div>
       </Router>
     </Provider>

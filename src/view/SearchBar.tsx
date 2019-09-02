@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui";
 import { useEffect, useState } from "react";
 import { searchMovie, Result } from "searchMovie";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
@@ -11,10 +11,12 @@ import { state } from "mainStore";
 const SearchBar: React.FC = () => {
   const apiKey = useSelector((e: state) => e.movieDbKey);
   const [query, setQuery] = useState("");
+  const [redirect, setRedirect] = useState(false);
   const [movieList, setMovieList] = useState([{}] as Result[]);
   const [loading, setLoading] = useState(false);
   const [focused, setFocused] = useState(false);
   const genreList = ["Action", "OwO"];
+
   const param = (() => {
     if (genreList.includes(query)) return "with_genres";
     else if (Number(query) >= 1907 && Number(query) <= new Date().getFullYear() + 1)
@@ -44,10 +46,11 @@ const SearchBar: React.FC = () => {
   }, [query, apiKey, param]);
 
   return (
-    <div>
+    <div onMouseLeave={() => setFocused(false)}>
       <div sx={{ display: "flex", gap: ".2em" }}>
         <div sx={{ position: "relative" }}>
           <input
+            onKeyPress={() => setFocused(true)}
             value={query}
             type="search"
             placeholder={"Busque um filme por nome, ano ou gênero..."}
@@ -61,8 +64,6 @@ const SearchBar: React.FC = () => {
               padding: "1em",
               borderRadius: "30px"
             }}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
           />
 
           {query !== "" &&
@@ -99,7 +100,10 @@ const SearchBar: React.FC = () => {
                       cursor: "pointer"
                     }}
                     key={i}>
-                    <Link to={"/movie/" + e.id} sx={{ all: "unset" }}>
+                    <Link
+                      to={"/movie/" + e.id}
+                      sx={{ all: "unset" }}
+                      onClick={() => setQuery("")}>
                       <div sx={{ display: "flex", gap: "10%" }}>
                         <img
                           src={"https://image.tmdb.org/t/p/w92" + e.poster_path}
