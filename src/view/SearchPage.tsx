@@ -12,7 +12,7 @@ import { state } from "mainStore";
 const SearchPage: React.FC<
   RouteComponentProps<{ query: string; type: string }>
 > = props => {
-  const apiKey = useSelector((e: state) => e.movieDbKey);
+  const apiKey = useSelector((e: state) => e);
   const [movieList, setMovieList] = useState([{}] as Result[]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -151,7 +151,7 @@ const SearchPage: React.FC<
           alignItems: "center"
         }}>
         {[1, 2, 3, 4, 5].map(e => (
-          <div onClick={() => setPage(e)} sx={{ cursor: "pointer" }}>
+          <div key={e} onClick={() => setPage(e)} sx={{ cursor: "pointer" }}>
             {e === page ? <Circle text={String(e)} size={40} /> : <p>{e}</p>}
           </div>
         ))}

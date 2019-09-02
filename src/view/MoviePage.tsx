@@ -11,8 +11,8 @@ import { state } from "mainStore";
 import isoLangs from "../isoLangs";
 
 const MoviePage: React.FC<RouteComponentProps<{ movie: string }>> = props => {
-  const apiKey = useSelector((e: state) => e.movieDbKey);
   const [movieDetails, setMovieDetails] = useState({} as getMovie);
+  const apiKey = useSelector((e: state) => e.movieDbKey);
   const [loading, setLoading] = useState(true);
   const section = { padding: [".5rem", "2rem"] };
   const toBrl = (e: number) =>
@@ -25,7 +25,7 @@ const MoviePage: React.FC<RouteComponentProps<{ movie: string }>> = props => {
   useEffect(() => {
     axios
       .get(
-        `https://api.themoviedb.org/3/movie/${props.match.params.movie}?append_to_response=videos&api_key=2f1782b66fc79d34a80c426568681445&language=pt-BR`
+        `https://api.themoviedb.org/3/movie/${props.match.params.movie}?append_to_response=videos&api_key=${apiKey}&language=pt-BR`
       )
       .then(e => {
         setMovieDetails({ ...e.data });
