@@ -5,7 +5,7 @@ export default {
     accent: "#6efffc",
     text: "black",
     bg: "#f2f2f2",
-    altBg: "#e6e6e6"
+    altBg: "#d1d1d1"
   },
   text: {
     header: { fontFamily: "'Abel', sans-serif" },
